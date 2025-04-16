@@ -86,6 +86,60 @@ def create_sequences(X, y, seq_len):
     
     return np.array(sequences, dtype=np.float32), np.array(targets, dtype=np.float32)
 
+def load_and_proc_data_FC(file_list,
+                       features=['Utot (V)', 'I (A)'],
+                       targets = ['Utot (V)'],
+                       SEQ_LEN=100, 
+                       BATCH_SIZE=32):
+    
+    X_seq = []
+    y_seq = []
+
+    for file in file_list:
+        df = pd.read_csv(file)
+        
+        X = df[features].values
+        y = df[targets[0]].values
+
+        X = np.nan_to_num(X, nan=0.0, posinf=0.0, neginf=0.0)
+
+        scaler_data = StandardScaler()
+        X = scaler_data.fit_transform(X)
+        y = y / 2
+
+        X_seq_temp, y_seq_temp = create_sequences(X, y, SEQ_LEN)
+        X_seq.extend(X_seq_temp)
+        y_seq.extend(y_seq_temp)
+        ind = np.arange(len(X_seq))
+
+    np.random.shuffle(ind)
+    X_seq = [X_seq[i] for i in ind]
+    y_seq = [y_seq[i] for i in ind]
+
+    train_size = int(0.8 * len(X_seq))
+    val_size = int(0.1 * len(X_seq))
+
+    X_train, y_train = X_seq[:train_size], y_seq[:train_size]
+    X_val, y_val = X_seq[train_size:train_size+val_size], y_seq[train_size:train_size+val_size]
+    X_test, y_test = X_seq[train_size+val_size:], y_seq[train_size+val_size:]
+
+    X_train = torch.tensor(np.array(X_seq[:train_size]), dtype=torch.float32)
+    y_train = torch.tensor(np.array(y_seq[:train_size]), dtype=torch.float32)
+    X_val = torch.tensor(np.array(X_seq[train_size:train_size+val_size]), dtype=torch.float32)
+    y_val = torch.tensor(np.array(y_seq[train_size:train_size+val_size]), dtype=torch.float32)
+    X_test = torch.tensor(np.array(X_seq[train_size+val_size:]), dtype=torch.float32)
+    y_test = torch.tensor(np.array(y_seq[train_size+val_size:]), dtype=torch.float32)
+
+    train_dataset = TensorDataset(X_train, y_train)
+    val_dataset = TensorDataset(X_val, y_val)
+    test_dataset = TensorDataset(X_test, y_test)
+
+    train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=False)
+    val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE)
+    test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE)
+
+    return X, y, train_loader, val_loader, test_loader, scaler_data
+
 def load_and_proc_data(file_list,
                        features=['pack_voltage (V)', 'charge_current (A)', 'max_temperature (℃)', 'min_temperature (℃)', 'soc', 'available_capacity (Ah)'],
                        targets = ['available_capacity (Ah)'],
@@ -188,9 +242,9 @@ def evaluate_model(model, test_loader, model_save_file, output_save_file, plot_m
     all_preds = np.concatenate(all_preds, axis=0)
     all_targets = np.concatenate(all_targets, axis=0)
 
-    if all_preds.ndim == 3 and all_preds.shape[-1] == 1:
-        all_preds = all_preds.squeeze(-1)
-        #all_targets = all_targets.squeeze(-1)
+    # Ensure predictions and targets are compatible
+    all_preds = all_preds.squeeze()
+    all_targets = all_targets[:, -1]  # Use the last value of the target sequence
 
     # Compute error metrics
     rmse = np.sqrt(mean_squared_error(all_targets, all_preds))
@@ -202,7 +256,7 @@ def evaluate_model(model, test_loader, model_save_file, output_save_file, plot_m
     mape = np.mean(np.abs((all_targets[non_zero_mask] - all_preds[non_zero_mask]) / all_targets[non_zero_mask])) * 100
 
     # Compute Pearson Correlation Coefficient (PCC)
-    pcc = np.array([pearsonr(all_targets[:, i], all_preds[:, i])[0] for i in range(all_targets.shape[1])])
+    pcc = np.array([pearsonr(all_targets, all_preds)[0]])
 
     # Compute Mean Directional Accuracy (MDA)
     direction_actual = np.sign(np.diff(all_targets))
@@ -226,7 +280,7 @@ def evaluate_model(model, test_loader, model_save_file, output_save_file, plot_m
         f.write(f"Test MDA: {mda}\n")
 
     if plot_fig:
-        plt.figure(figsize=(10, 5))
+        plt.figure(figsize=(16, 10))  # Increased figure size
         start = 0
         for i in range(1):
             length = pred_out[i].shape[0]

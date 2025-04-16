@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
-from fno_battery.utils import extract_VIT_capacity, plot_loss, plot_pred
+from fno_battery.utils import load_and_proc_data_FC, evaluate_model
 import os
 
 class SpectralConv1d(nn.Module):
@@ -104,7 +104,7 @@ class RULPredictor:
         self.model = FNO1d(
             modes=self.modes,
             width=self.width,
-            input_dim=4,  # Voltage, Current, Temperature, Capacity
+            input_dim=2,  # Adjusted to match the number of features in the dataset
             output_dim=1  # Predicted RUL
         ).to(self.device)
         
@@ -188,59 +188,39 @@ def create_data_loaders(x_train, y_train, x_val, y_val, batch_size=32):
     return train_loader, val_loader
 
 if __name__ == "__main__":
-    # Set random seed for reproducibility
-    torch.manual_seed(42)
-    np.random.seed(42)
-    
-    # Hyperparameters
-    SEQ_LEN = 50
-    BATCH_SIZE = 32
-    EPOCHS = 100
-    MODES = 16
-    WIDTH = 64
-    LEARNING_RATE = 1e-3
-    
-    # Create save directory
-    save_dir = "results/FNO"
-    os.makedirs(save_dir, exist_ok=True)
-    
-    # Load and preprocess data
-    x_datasets = ["data/NASA/B0005.csv", "data/NASA/B0006.csv", "data/NASA/B0007.csv"]
-    y_datasets = ["data/NASA/B0005.csv", "data/NASA/B0006.csv", "data/NASA/B0007.csv"]
-    
-    X, y, scalers = extract_VIT_capacity(
-        x_datasets=x_datasets,
-        y_datasets=y_datasets,
-        seq_len=SEQ_LEN,
-        extract_all=True
+    # Define file paths and parameters
+    file_list = ["C:/Users/serha/PycharmProjects/Temp/fno_battery/data/data/ieee1/FC1_test_filtered.csv"]  # Example file paths
+    seq_len = 50
+    batch_size = 32
+    epochs = 20
+    save_dir = "models"
+    model_save_file = os.path.join(save_dir, 'best_model.pth')
+    output_save_file = "outputs/test_results.txt"
+
+    # Load and process data
+    X, y, train_loader, val_loader, test_loader, scaler_data = load_and_proc_data_FC(
+        file_list=file_list,
+        SEQ_LEN=seq_len,
+        BATCH_SIZE=batch_size
+    )
+
+    # Initialize RULPredictor
+    rul_predictor = RULPredictor(seq_len=seq_len)
+
+    # Train the model
+    train_losses, val_losses = rul_predictor.train(
+        train_loader=train_loader,
+        val_loader=val_loader,
+        epochs=epochs,
+        save_dir=save_dir
+    )
+
+    # Evaluate the model
+    evaluate_model(
+        model=rul_predictor.model,
+        test_loader=test_loader,
+        model_save_file=model_save_file,
+        output_save_file=output_save_file,
+        device=rul_predictor.device
     )
     
-    # Split data
-    train_size = int(0.8 * len(X))
-    x_train, x_val = X[:train_size], X[train_size:]
-    y_train, y_val = y[:train_size], y[train_size:]
-    
-    # Create data loaders
-    train_loader, val_loader = create_data_loaders(
-        x_train, y_train, x_val, y_val, BATCH_SIZE
-    )
-    
-    # Initialize and train model
-    predictor = RULPredictor(
-        seq_len=SEQ_LEN,
-        modes=MODES,
-        width=WIDTH,
-        learning_rate=LEARNING_RATE
-    )
-    
-    train_losses, val_losses = predictor.train(
-        train_loader, val_loader, EPOCHS, save_dir
-    )
-    
-    # Plot training results
-    history = type('History', (), {'history': {'loss': train_losses, 'val_loss': val_losses}})()
-    plot_loss(history, "results", "FNO")
-    
-    # Make predictions on validation set
-    predictions = predictor.predict(val_loader)
-    plot_pred(predictions, y_val, "results", "FNO", "validation_predictions") 
