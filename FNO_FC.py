@@ -1,3 +1,4 @@
+# Import necessary libraries
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -5,6 +6,7 @@ import numpy as np
 from fno_battery.utils import load_and_proc_data_FC, evaluate_model
 import os
 
+# Define SpectralConv1d class for spectral convolution
 class SpectralConv1d(nn.Module):
     def __init__(self, in_channels, out_channels, modes):
         super(SpectralConv1d, self).__init__()
@@ -30,6 +32,7 @@ class SpectralConv1d(nn.Module):
         x = torch.fft.irfft(out_ft, n=x.size(-1))
         return x
 
+# Define FNO1d class for Fourier Neural Operator
 class FNO1d(nn.Module):
     def __init__(self, modes, width, input_dim, output_dim):
         super(FNO1d, self).__init__()
@@ -91,6 +94,7 @@ class FNO1d(nn.Module):
         
         return x[:, -1, :]  # Return only the last prediction
 
+# Define RULPredictor class for Remaining Useful Life prediction
 class RULPredictor:
     def __init__(self, seq_len=50, modes=16, width=64, learning_rate=1e-3):
         self.seq_len = seq_len
@@ -168,6 +172,7 @@ class RULPredictor:
                 predictions.append(pred.cpu().numpy())
         return np.concatenate(predictions, axis=0)
 
+# Function to create data loaders for training and validation
 def create_data_loaders(x_train, y_train, x_val, y_val, batch_size=32):
     train_dataset = torch.utils.data.TensorDataset(
         torch.FloatTensor(x_train),

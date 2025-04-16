@@ -13,6 +13,7 @@ from scipy.stats import pearsonr
 # FNO
 # ------------------------------
 
+# SpectralConv1d class for spectral convolution
 class SpectralConv1d(nn.Module):
     def __init__(self, in_channels, out_channels, modes):
         super().__init__()
@@ -43,6 +44,7 @@ class SpectralConv1d(nn.Module):
         x = torch.fft.irfft(out_ft, n=L, dim=-1)
         return x
 
+# FNO1DBlock class for Fourier Neural Operator block
 class FNO1DBlock(nn.Module):
     def __init__(self, width, modes):
         super().__init__()
@@ -53,6 +55,7 @@ class FNO1DBlock(nn.Module):
     def forward(self, x):
         return self.activation(self.fourier(x) + self.linear(x))
 
+# TimeSeriesFNO class for time series forecasting using FNO
 class TimeSeriesFNO(nn.Module):
     def __init__(self, input_features, output_features, seq_len, pred_len, width=64, modes=16, depth=4):
         super().__init__()
@@ -75,6 +78,7 @@ class TimeSeriesFNO(nn.Module):
 # DATA
 # ------------------------------
 
+# Function to create sequences from data
 def create_sequences(X, y, seq_len):
 
     sequences = []
@@ -86,6 +90,7 @@ def create_sequences(X, y, seq_len):
     
     return np.array(sequences, dtype=np.float32), np.array(targets, dtype=np.float32)
 
+# Function to load and process data for FC model
 def load_and_proc_data_FC(file_list,
                        features=['Utot (V)', 'I (A)'],
                        targets = ['Utot (V)'],
@@ -140,6 +145,7 @@ def load_and_proc_data_FC(file_list,
 
     return X, y, train_loader, val_loader, test_loader, scaler_data
 
+# Function to load and process data for general use
 def load_and_proc_data(file_list,
                        features=['pack_voltage (V)', 'charge_current (A)', 'max_temperature (℃)', 'min_temperature (℃)', 'soc', 'available_capacity (Ah)'],
                        targets = ['available_capacity (Ah)'],
@@ -198,6 +204,7 @@ def load_and_proc_data(file_list,
 # TRAINING & TESTING
 # ------------------------------
 
+# Function to train the model
 def train_model(model, train_loader, val_loader, loss_fn, optimizer, model_save_file="models/best_model.pth", device=torch.device("cpu"), num_epochs=20):
     
     model.to(device)
@@ -221,7 +228,7 @@ def train_model(model, train_loader, val_loader, loss_fn, optimizer, model_save_
         
         print(f"Epoch {epoch+1}/{num_epochs}, Loss: {epoch_loss / len(train_loader):.5f}")
 
-
+# Function to evaluate the model
 def evaluate_model(model, test_loader, model_save_file, output_save_file, plot_model_name='model', plot_fig = True, device=torch.device("cpu"), return_error_results = False, use_gpu = True):
     model.load_state_dict(torch.load(model_save_file))
     model.eval()
