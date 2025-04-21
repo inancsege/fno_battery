@@ -3,7 +3,7 @@ import torch
 import os
 
 # --- Project Imports ---
-import config
+from . import config
 from .utils.helpers import set_seed, create_dir_if_not_exists
 from .utils.plotting import plot_loss_curves, plot_predictions
 
