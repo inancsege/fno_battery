@@ -20,9 +20,9 @@ DATASET_TYPE = 'NASA_VIT'
 DATA_PATHS = {
     'NASA_VIT': {
         'files': [
-            os.path.join(BASE_DIR, "data/NASA/B0005.csv"),
-            os.path.join(BASE_DIR, "data/NASA/B0006.csv"),
-            os.path.join(BASE_DIR, "data/NASA/B0007.csv")
+            os.path.join(BASE_DIR, "..", "data/data/NASA/charge/train/B0005_charge.csv"),
+            os.path.join(BASE_DIR, "..", "data/data/NASA/charge/train/B0006_charge.csv"),
+            os.path.join(BASE_DIR, "..", "data/data/NASA/charge/train/B0007_charge.csv")
         ],
         'features': ['Voltage_measured', 'Current_measured', 'Temperature_measured', 'Capacity'], # Example names, adjust based on actual CSV headers
         'target': 'Capacity', # Or RUL if calculated
@@ -30,7 +30,7 @@ DATA_PATHS = {
         'output_dim': 1, # RUL or Capacity
     },
     'NASA_RUL': {
-        'dir': os.path.join(BASE_DIR, "data/NASA"), # Assumes structure like data/NASA/discharge/train/*.csv
+        'dir': os.path.join(BASE_DIR, "data/data/NASA/train/B0018.csv"),
         'features': ['voltage_battery', 'current_battery', 'temp_battery', 'capacity'],
         'target': 'RUL', # Calculated RUL
         'input_dim_cnn': 1, # For V, I, T processed separately
@@ -40,7 +40,7 @@ DATA_PATHS = {
         'seq_len_lstm': 10, # Specific to FNO_RUL.py structure
     },
     'IEEE_FC': {
-        'files': [os.path.join(BASE_DIR, "data/IEEE/FC1_test_filtered.csv")], # Example path
+        'files': [os.path.join(BASE_DIR, "data/data/IEEE/FC1_test_filtered.csv")],
         'features': ['Utot (V)', 'I (A)'], # From FNO_FC.py
         'target': 'Utot (V)', # Or RUL if calculated
         'input_dim': 2,
