@@ -4,17 +4,17 @@ import os
 
 # --- Project Imports ---
 import config
-from utils.helpers import set_seed, create_dir_if_not_exists
-from utils.plotting import plot_loss_curves, plot_predictions
+from .utils.helpers import set_seed, create_dir_if_not_exists
+from .utils.plotting import plot_loss_curves, plot_predictions
 
-from preprocessing.nasa_preprocessor import NasaVitPreprocessor, NasaRulPreprocessor
-from preprocessing.ieee_fc_preprocessor import IeeeFcPreprocessor
-from preprocessing.xjtu_preprocessor import XjtuPreprocessor
+from .preprocessing.nasa_preprocessor import NasaVitPreprocessor, NasaRulPreprocessor
+from .preprocessing.ieee_fc_preprocessor import IeeeFcPreprocessor
+from .preprocessing.xjtu_preprocessor import XjtuPreprocessor
 # Import other preprocessors as needed
 
-from models.fno import FNO1D, FNO_RUL_Hybrid # Import relevant model(s)
-from training.trainer import Trainer
-from evaluation.evaluator import Evaluator
+from .models.fno import FNO1D, FNO_RUL_Hybrid # Import relevant model(s)
+from .training.trainer import Trainer
+from .evaluation.evaluator import Evaluator
 
 def main():
     # --- Setup ---
