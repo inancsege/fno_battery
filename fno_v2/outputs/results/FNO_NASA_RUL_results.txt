@@ -1,0 +1,10 @@
+Evaluation Results for Model: FNO_NASA_RUL
+Dataset Type: NASA_RUL
+------------------------------
+RMSE: 0.110580
+MAE: 0.041707
+R2: 0.860674
+MAPE: 28.775776
+PCC: 0.929916
+MDA: 91.228070
+------------------------------

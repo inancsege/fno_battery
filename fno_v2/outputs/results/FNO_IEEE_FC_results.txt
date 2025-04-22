@@ -1,0 +1,10 @@
+Evaluation Results for Model: FNO_IEEE_FC
+Dataset Type: IEEE_FC
+------------------------------
+RMSE: 0.000128
+MAE: 0.000078
+R2: 0.999875
+MAPE: 0.002410
+PCC: 0.999938
+MDA: 100.000000
+------------------------------

@@ -4,7 +4,7 @@ import numpy as np
 import os
 import glob
 from .base_preprocessor import BasePreprocessor
-from .utils import create_sequences, create_multi_input_sequences
+from .utils import create_sequences, create_multi_input_sequences, scale_data, split_data
 # Can import more advanced functions from preproc.py if needed and adapt them
 
 class NasaVitPreprocessor(BasePreprocessor):

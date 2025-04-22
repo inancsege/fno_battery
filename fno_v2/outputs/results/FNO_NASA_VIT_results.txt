@@ -1,0 +1,10 @@
+Evaluation Results for Model: FNO_NASA_VIT
+Dataset Type: NASA_VIT
+------------------------------
+RMSE: 0.019798
+MAE: 0.009837
+R2: 0.990683
+MAPE: 0.596818
+PCC: 0.995443
+MDA: 95.555556
+------------------------------

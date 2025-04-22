@@ -13,24 +13,24 @@ RESULTS_SAVE_DIR = os.path.join(OUTPUT_DIR, "results")
 
 # --- Dataset Selection ---
 # Options: 'NASA_VIT', 'NASA_RUL', 'IEEE_FC', 'XJTU'
-DATASET_TYPE = 'NASA_VIT'
+DATASET_TYPE = 'XJTU' # Change this to select the dataset
 
 # --- Data Paths ---
 # Adjust paths based on your data location relative to BASE_DIR or use absolute paths
 DATA_PATHS = {
     'NASA_VIT': {
         'files': [
-            os.path.join(BASE_DIR, "..", "data/data/NASA/charge/train/B0005_charge.csv"),
-            os.path.join(BASE_DIR, "..", "data/data/NASA/charge/train/B0006_charge.csv"),
-            os.path.join(BASE_DIR, "..", "data/data/NASA/charge/train/B0007_charge.csv")
+            os.path.join(BASE_DIR, "..", "data/data/NASA/discharge/train/B0005_discharge.csv"),
+            os.path.join(BASE_DIR, "..", "data/data/NASA/discharge/train/B0006_discharge.csv"),
+            os.path.join(BASE_DIR, "..", "data/data/NASA/discharge/train/B0007_discharge.csv")
         ],
-        'features': ['Voltage_measured', 'Current_measured', 'Temperature_measured', 'Capacity'], # Example names, adjust based on actual CSV headers
-        'target': 'Capacity', # Or RUL if calculated
-        'input_dim': 4, # V, I, T, C
-        'output_dim': 1, # RUL or Capacity
+        'features': ['voltage_battery', 'current_battery', 'temp_battery'], # Features present in discharge CSVs
+        'target': 'capacity', # Lowercase 'capacity' found in discharge CSVs
+        'input_dim': 3, # V, I, T
+        'output_dim': 1, # Capacity
     },
     'NASA_RUL': {
-        'dir': os.path.join(BASE_DIR, "data/data/NASA/train/B0018.csv"),
+        'dir': os.path.join(BASE_DIR, "..", "data/data/NASA/"), # Point to the directory containing charge/ and discharge/
         'features': ['voltage_battery', 'current_battery', 'temp_battery', 'capacity'],
         'target': 'RUL', # Calculated RUL
         'input_dim_cnn': 1, # For V, I, T processed separately
@@ -40,14 +40,14 @@ DATA_PATHS = {
         'seq_len_lstm': 10, # Specific to FNO_RUL.py structure
     },
     'IEEE_FC': {
-        'files': [os.path.join(BASE_DIR, "data/data/IEEE/FC1_test_filtered.csv")],
+        'files': [os.path.join(BASE_DIR, "..", "data/data/IEEE/FC1_test_filtered.csv")],
         'features': ['Utot (V)', 'I (A)'], # From FNO_FC.py
         'target': 'Utot (V)', # Or RUL if calculated
         'input_dim': 2,
         'output_dim': 1,
     },
     'XJTU': {
-        'dir': os.path.join(BASE_DIR, "data/XJTU_data"),
+        'dir': os.path.join(BASE_DIR, "..", "data/XJTU_data"),
         'features': ['voltage mean','voltage std','voltage kurtosis','voltage skewness','CC Q','CC charge time','voltage slope','voltage entropy','current mean','current std','current kurtosis','current skewness','CV Q','CV charge time','current slope','current entropy','capacity'],
         'target': 'capacity',
         'input_dim': 17,
@@ -61,8 +61,8 @@ SEQ_LEN = 50
 MODES = 16
 WIDTH = 64
 DEPTH = 4 # Number of FNO blocks (from utils.py TimeSeriesFNO)
-INPUT_DIM = DATA_PATHS[DATASET_TYPE]['input_dim']
-OUTPUT_DIM = DATA_PATHS[DATASET_TYPE]['output_dim']
+# INPUT_DIM = DATA_PATHS[DATASET_TYPE]['input_dim'] # Updated below based on selected dataset
+# OUTPUT_DIM = DATA_PATHS[DATASET_TYPE]['output_dim'] # Updated below based on selected dataset
 
 # Specific settings for NASA_RUL hybrid model
 if DATASET_TYPE == 'NASA_RUL':

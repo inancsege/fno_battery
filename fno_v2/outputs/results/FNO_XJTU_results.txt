@@ -1,0 +1,10 @@
+Evaluation Results for Model: FNO_XJTU
+Dataset Type: XJTU
+------------------------------
+RMSE: 0.000175
+MAE: 0.000137
+R2: 0.999996
+MAPE: 0.007371
+PCC: 0.999999
+MDA: 99.827883
+------------------------------
