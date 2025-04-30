@@ -3,6 +3,8 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler
 
+EXPECTED_KEYS = ['voltage', 'current', 'temperature', 'capacity']
+
 def create_sequences(X, y, seq_len, stride=1):
     """Creates overlapping sequences and corresponding targets."""
     X_seq, y_seq = [], []
@@ -19,13 +21,24 @@ def create_multi_input_sequences(data_dict, seq_lens, target_rul, stride=1):
     """
     Creates sequences for multiple inputs with potentially different lengths.
     Specific to the structure needed by FNO_RUL.py's model.
-    Assumes 'v', 'i', 't' use seq_len_cnn and 'c' uses seq_len_lstm.
+    Assumes 'voltage', 'current', 'temperature' use seq_len_cnn and 'capacity' uses seq_len_lstm.
     """
+    # Check for expected keys
+    missing_keys = [key for key in EXPECTED_KEYS if key not in data_dict]
+    if missing_keys:
+        raise ValueError(f"Missing required keys in data_dict: {', '.join(missing_keys)}")
+
+    # Check if all input arrays have the same length initially (before sequencing)
+    first_key = EXPECTED_KEYS[0]
+    num_samples = data_dict[first_key].shape[0]
+    for key in EXPECTED_KEYS[1:]:
+        if data_dict[key].shape[0] != num_samples:
+            raise ValueError(f"Input arrays for '{first_key}' and '{key}' have different lengths ({num_samples} vs {data_dict[key].shape[0]})")
+
     v_seq, i_seq, t_seq, c_seq, rul_seq = [], [], [], [], []
     seq_len_cnn = seq_lens['cnn']
     seq_len_lstm = seq_lens['lstm']
     max_len = max(seq_len_cnn, seq_len_lstm)
-    num_samples = data_dict['voltage'].shape[0]
 
     for i in range(0, num_samples - max_len + 1, stride):
         v = data_dict['voltage'][i : i + seq_len_cnn]
@@ -101,6 +114,8 @@ def scale_data_with_existing(data, scaler):
 
 def split_data(X, y, val_split, test_split, shuffle=True, seed=None):
     """Splits data into training, validation, and test sets."""
+    assert val_split >= 0 and test_split >= 0, "Split percentages cannot be negative."
+    assert val_split + test_split < 1.0, "Sum of val_split and test_split must be less than 1.0"
     if seed is not None:
         np.random.seed(seed)
 
