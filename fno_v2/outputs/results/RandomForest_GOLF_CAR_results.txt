@@ -1,0 +1,12 @@
+Dataset: GOLF_CAR
+Model: RandomForest_GOLF_CAR
+
+----- Evaluation Metrics -----
+RMSE: 3.164331
+MAE: 1.459758
+R2: -1.344508
+MAPE: 0.121954
+PCC: 0.109019
+MDA: 55.459044
+
+Evaluation timestamp: 2025-04-30 03:15:20.443571
