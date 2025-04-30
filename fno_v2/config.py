@@ -13,7 +13,7 @@ RESULTS_SAVE_DIR = os.path.join(OUTPUT_DIR, "results")
 
 # --- Model Selection ---
 # Options: "FNO", "LSTM", "LSTM_ATTN", "TCN", "XGBoost", "RandomForest", "LinearRegression", "SVR"
-MODEL_TYPE = "LSTM_ATTN"  # Change this to select which algorithm to train/test
+MODEL_TYPE = "RandomForest"  # Change this to select which algorithm to train/test
 
 # --- Dataset Selection ---
 # Options: 'NASA_VIT', 'NASA_RUL', 'IEEE_FC', 'XJTU', 'GOLF_CAR'

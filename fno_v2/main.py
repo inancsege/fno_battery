@@ -8,25 +8,25 @@ import argparse
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # --- Project Imports ---
-import fno_battery.fno_v2.config as config
-from fno_battery.fno_v2.utils.helpers import set_seed, create_dir_if_not_exists
-from fno_battery.fno_v2.utils.plotting import plot_loss_curves, plot_predictions
+import fno_v2.config as config
+from fno_v2.utils.helpers import set_seed, create_dir_if_not_exists
+from fno_v2.utils.plotting import plot_loss_curves, plot_predictions
 
-from fno_battery.fno_v2.preprocessing.nasa_preprocessor import NasaVitPreprocessor, NasaRulPreprocessor
-from fno_battery.fno_v2.preprocessing.ieee_fc_preprocessor import IeeeFcPreprocessor
-from fno_battery.fno_v2.preprocessing.xjtu_preprocessor import XjtuPreprocessor
-from fno_battery.fno_v2.preprocessing.golf_car_preprocessor import GolfCarPreprocessor
+from fno_v2.preprocessing.nasa_preprocessor import NasaVitPreprocessor, NasaRulPreprocessor
+from fno_v2.preprocessing.ieee_fc_preprocessor import IeeeFcPreprocessor
+from fno_v2.preprocessing.xjtu_preprocessor import XjtuPreprocessor
+from fno_v2.preprocessing.golf_car_preprocessor import GolfCarPreprocessor
 # Import other preprocessors as needed
 
-from fno_battery.fno_v2.models.fno import FNO1D, FNO_RUL_Hybrid  # FNO models
-from fno_battery.fno_v2.models.lstm import LSTM, LSTMAttention   # LSTM models
-from fno_battery.fno_v2.models.tcn import TCN                    # TCN model
-from fno_battery.fno_v2.models.ml_models import (
+from fno_v2.models.fno import FNO1D, FNO_RUL_Hybrid  # FNO models
+from fno_v2.models.lstm import LSTM, LSTMAttention   # LSTM models
+from fno_v2.models.tcn import TCN                    # TCN model
+from fno_v2.models.ml_models import (
     XGBoostModel, RandomForestModel, LinearRegressionModel, SVRModel  # Traditional ML models
 )
 
-from fno_battery.fno_v2.training.trainer import Trainer
-from fno_battery.fno_v2.evaluation.evaluator import Evaluator
+from fno_v2.training.trainer import Trainer
+from fno_v2.evaluation.evaluator import Evaluator
 
 def parse_arguments():
     """Parse command line arguments"""
