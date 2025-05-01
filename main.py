@@ -1,38 +1,224 @@
-import torch
-import torch.optim as optim
-import torch.nn as nn
-from torch.utils.data import DataLoader, TensorDataset
-import numpy as np
-import matplotlib.pyplot as plt
-from utils import TimeSeriesFNO, load_and_proc_data, train_model, evaluate_model
-
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# -*- coding: utf-8 -*-
+"""
+Main script for the FNO Battery Capacity Prediction project
+"""
 
 import os
-directory = "data/XJTU_data"
-file_list = csv_files = [directory+'/'+f for f in os.listdir(directory) if f.endswith(".csv")]
-for f in file_list:
-    print(f)
+import sys
+import argparse
+import torch
+import numpy as np
+import logging
+from datetime import datetime
+
+from utils.logger import setup_logger
+from config import MODEL_CONFIGS, DATASET_CONFIGS, GENERAL_CONFIG
+import models
+from preprocessing.data_processor import DataProcessor
+from training.trainer import Trainer
+from evaluation.evaluator import Evaluator
+
+def setup_directories():
+    """Create necessary directories if they don't exist"""
+    os.makedirs("models", exist_ok=True)
+    os.makedirs("outputs/results", exist_ok=True)
+    os.makedirs("outputs/figures", exist_ok=True)
+    os.makedirs("logs", exist_ok=True)
+
+def parse_arguments():
+    """Parse command line arguments"""
+    parser = argparse.ArgumentParser(description='Battery Capacity Prediction with Various Models')
     
-SEQ_LEN = 10
-BATCH_SIZE = 128
-features = ['voltage mean','voltage std','voltage kurtosis','voltage skewness','CC Q','CC charge time','voltage slope','voltage entropy','current mean','current std','current kurtosis','current skewness','CV Q','CV charge time','current slope','current entropy','capacity']
-targets = ['capacity']
-NUM_FEATURES = len(features)
-NUM_TARGETS = len(targets)
+    parser.add_argument('--model', type=str, required=False, default='FNO',
+                        choices=['FNO', 'LSTM', 'LSTM_ATTN', 'TCN', 'XGBoost', 
+                                'RandomForest', 'LinearRegression', 'SVR'],
+                        help='Type of model to use')
+    
+    parser.add_argument('--dataset', type=str, required=False, default='NASA_VIT',
+                        choices=['NASA_VIT', 'NASA_RUL', 'IEEE_FC', 'XJTU', 'GOLF_CAR'],
+                        help='Dataset to use for training and evaluation')
+    
+    parser.add_argument('--seq_len', type=int, default=None,
+                        help='Sequence length for time series data (overrides config)')
+    
+    parser.add_argument('--batch_size', type=int, default=None,
+                        help='Batch size for training (overrides config)')
+    
+    parser.add_argument('--epochs', type=int, default=None,
+                        help='Number of training epochs (overrides config)')
+    
+    parser.add_argument('--learning_rate', type=float, default=None,
+                        help='Learning rate (overrides config)')
+    
+    parser.add_argument('--eval_only', action='store_true',
+                        help='Only run evaluation on test data')
+    
+    parser.add_argument('--seed', type=int, default=42,
+                        help='Random seed for reproducibility')
+    
+    parser.add_argument('--gpu', type=int, default=0,
+                        help='GPU device ID to use')
+    
+    parser.add_argument('--debug', action='store_true',
+                        help='Enable debug mode with more verbose logging')
+    
+    return parser.parse_args()
 
-_, _, train_loader, val_loader, test_loader, scaler_data = load_and_proc_data(file_list,
-                                                                              features = features,
-                                                                              targets=targets,
-                                                                              SEQ_LEN = SEQ_LEN,
-                                                                              BATCH_SIZE = BATCH_SIZE)
+def set_random_seed(seed):
+    """Set random seed for reproducibility"""
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed(seed)
+        torch.cuda.manual_seed_all(seed)
+        torch.backends.cudnn.deterministic = True
+        torch.backends.cudnn.benchmark = False
 
+def main():
+    """Main function to run the training and evaluation pipeline"""
+    # Parse command line arguments
+    args = parse_arguments()
+    
+    # Set up directories
+    setup_directories()
+    
+    # Configure logging
+    log_level = logging.DEBUG if args.debug else logging.INFO
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    log_file = f"logs/{args.model}_{args.dataset}_{timestamp}.log"
+    logger = setup_logger(log_file, log_level)
+    
+    # Set random seed
+    set_random_seed(args.seed)
+    
+    # Select device
+    if torch.cuda.is_available():
+        device = torch.device(f"cuda:{args.gpu}")
+        logger.info(f"Using GPU: {torch.cuda.get_device_name(device)}")
+    else:
+        device = torch.device("cpu")
+        logger.info("GPU not available, using CPU")
+    
+    # Get model and dataset configurations
+    model_config = MODEL_CONFIGS[args.model].copy()
+    dataset_config = DATASET_CONFIGS[args.dataset].copy()
+    
+    # Override configurations with command line arguments if provided
+    if args.seq_len is not None:
+        model_config['seq_len'] = args.seq_len
+    if args.batch_size is not None:
+        model_config['batch_size'] = args.batch_size
+    if args.epochs is not None:
+        model_config['epochs'] = args.epochs
+    if args.learning_rate is not None:
+        model_config['learning_rate'] = args.learning_rate
+    
+    # Log configurations
+    logger.info(f"Model: {args.model}")
+    logger.info(f"Dataset: {args.dataset}")
+    logger.info(f"Model Config: {model_config}")
+    logger.info(f"Dataset Config: {dataset_config}")
+    
+    # Process data
+    logger.info("Processing data...")
+    data_processor = DataProcessor(
+        dataset_name=args.dataset,
+        **dataset_config,
+        **{k: v for k, v in model_config.items() if k in ['seq_len', 'batch_size']}
+    )
+    
+    train_loader, val_loader, test_loader, dataset_info = data_processor.get_data_loaders()
+    logger.info(f"Dataset info: {dataset_info}")
+    
+    # Initialize model
+    logger.info("Initializing model...")
+    ModelClass = getattr(models, args.model)
+    
+    # Handle model initialization based on model type
+    if args.model in ['LSTM', 'LSTM_ATTN', 'TCN']:
+        # These models don't use seq_len in initialization
+        model = ModelClass(
+            input_dim=dataset_info['input_dim'],
+            output_dim=dataset_info['output_dim'],
+            **{k: v for k, v in model_config.items() if k not in ['seq_len', 'batch_size', 'epochs', 'learning_rate']}
+        )
+    else:
+        # FNO and other models use seq_len
+        model = ModelClass(
+            input_dim=dataset_info['input_dim'],
+            output_dim=dataset_info['output_dim'],
+            seq_len=model_config['seq_len'],
+            **{k: v for k, v in model_config.items() if k not in ['seq_len', 'batch_size', 'epochs', 'learning_rate']}
+        )
+    
+    # Move model to device
+    model = model.to(device)
+    
+    # Model save path
+    model_save_dir = "models"
+    model_filename = f"{args.model}_{args.dataset}_model.pt"
+    model_save_path = os.path.join(model_save_dir, model_filename)
+    
+    # Results and figure paths
+    results_file = f"outputs/results/{args.model}_{args.dataset}_results.json"
+    figure_path = f"outputs/figures/{args.model}_{args.dataset}_prediction.png"
+    
+    if not args.eval_only:
+        # Train model
+        logger.info("Training model...")
+        trainer = Trainer(
+            model=model,
+            train_loader=train_loader,
+            val_loader=val_loader,
+            config={
+                'epochs': model_config['epochs'],
+                'learning_rate': model_config['learning_rate'],
+                'model_save_path': model_save_path,
+                'device': device,
+                'logger': logger
+            }
+        )
+        trainer.train()
+    
+    # Evaluate model
+    logger.info("Evaluating model...")
+    
+    # Skip evaluation if test set is too small
+    test_set_size = len(test_loader.dataset)
+    if test_set_size < 2:
+        logger.warning(f"Test set too small ({test_set_size} samples). Skipping evaluation.")
+        logger.info("Done!")
+        return
+    
+    evaluator = Evaluator(
+        model=model,
+        data_loader=test_loader,
+        config={
+            'device': device,
+            'model_save_path': model_save_path,
+            'results_file': results_file,
+            'figure_path': figure_path,
+            'dataset_info': dataset_info,
+            'logger': logger
+        }
+    )
+    evaluation_result = evaluator.evaluate()
+    
+    # Handle different return formats from evaluator
+    if isinstance(evaluation_result, tuple) and len(evaluation_result) == 3:
+        # Returns: all_targets, all_preds, metrics
+        _, _, metrics = evaluation_result
+    else:
+        metrics = evaluation_result
+    
+    # Print evaluation results
+    logger.info("Evaluation metrics:")
+    for metric_name, metric_value in metrics.items():
+        logger.info(f"{metric_name}: {metric_value:.4f}")
+    
+    logger.info(f"Results saved to {results_file}")
+    logger.info(f"Prediction plot saved to {figure_path}")
+    logger.info("Done!")
 
-# Model
-model = TimeSeriesFNO(NUM_FEATURES, NUM_TARGETS, SEQ_LEN, SEQ_LEN)
-optimizer = optim.Adam(model.parameters(), lr=0.001)
-loss_fn = nn.MSELoss()
-
-train_model(model, train_loader, val_loader, loss_fn, optimizer, "models/FNO_model.pth", device, num_epochs=10)
-
-evaluate_model(model, test_loader, "models/FNO_model.pth", 'outputs/error_results_FNO.txt', 'FNO', plot_fig = True, device=device)
+if __name__ == "__main__":
+    main() 
