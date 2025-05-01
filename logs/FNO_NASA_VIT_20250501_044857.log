@@ -1,0 +1,20 @@
+2025-05-01 04:48:57,315 - INFO - Logger initialized at 2025-05-01 04:48:57
+2025-05-01 04:48:57,317 - INFO - GPU not available, using CPU
+2025-05-01 04:48:57,317 - INFO - Model: FNO
+2025-05-01 04:48:57,317 - INFO - Dataset: NASA_VIT
+2025-05-01 04:48:57,317 - INFO - Model Config: {'seq_len': 10, 'modes': 12, 'width': 48, 'depth': 3, 'batch_size': 32, 'epochs': 10, 'learning_rate': 8e-05}
+2025-05-01 04:48:57,318 - INFO - Dataset Config: {'files': ['data/NASA/discharge/train/B0005_discharge.csv', 'data/NASA/discharge/train/B0006_discharge.csv', 'data/NASA/discharge/train/B0007_discharge.csv'], 'features': ['voltage_battery', 'current_battery', 'temp_battery'], 'target': 'capacity', 'input_dim': 3, 'output_dim': 1, 'validation_split': 0.2, 'test_split': 0.2}
+2025-05-01 04:48:57,318 - INFO - Processing data...
+2025-05-01 04:48:57,319 - INFO - Processing NASA_VIT dataset
+2025-05-01 04:48:57,319 - INFO - Loading NASA VIT dataset
+2025-05-01 04:48:57,319 - INFO - Loading file: data/NASA/discharge/train/B0005_discharge.csv
+2025-05-01 04:48:57,319 - INFO - Loading file: data/NASA/discharge/train/B0006_discharge.csv
+2025-05-01 04:48:57,321 - INFO - Loading file: data/NASA/discharge/train/B0007_discharge.csv
+2025-05-01 04:48:57,322 - INFO - Loaded 70 records from 3 files
+2025-05-01 04:48:57,322 - INFO - Preprocessing NASA VIT data
+2025-05-01 04:48:57,324 - INFO - Creating sequences with length 10 and stride 5
+2025-05-01 04:48:57,326 - INFO - Created 8 sequences with shape (8, 10, 3)
+2025-05-01 04:48:57,327 - INFO - Created data loaders: Train (6 samples), Validation (1 samples), Test (1 samples)
+2025-05-01 04:48:57,327 - INFO - Dataset info: {'input_dim': 3, 'output_dim': 1, 'seq_len': 10, 'features': ['voltage_battery', 'current_battery', 'temp_battery'], 'target': 'capacity'}
+2025-05-01 04:48:57,327 - INFO - Initializing model...
+2025-05-01 04:48:57,329 - INFO - Training model...

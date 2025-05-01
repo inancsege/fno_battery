@@ -1,0 +1,39 @@
+2025-05-01 05:19:19,536 - INFO - Logger initialized at 2025-05-01 05:19:19
+2025-05-01 05:19:19,539 - INFO - Using GPU: NVIDIA GeForce RTX 4090 Laptop GPU
+2025-05-01 05:19:19,539 - INFO - Model: LSTM
+2025-05-01 05:19:19,539 - INFO - Dataset: GOLF_CAR
+2025-05-01 05:19:19,539 - INFO - Model Config: {'seq_len': 40, 'hidden_dim': 48, 'num_layers': 3, 'dropout': 0.2, 'batch_size': 32, 'epochs': 100, 'learning_rate': 1e-05}
+2025-05-01 05:19:19,539 - INFO - Dataset Config: {'dir': 'C:\\Users\\serha\\PycharmProjects\\fno_battery\\data\\data\\scaledData', 'features': ['soc', 'pack_voltage (V)', 'charge_current (A)', 'max_cell_voltage (V)', 'min_cell_voltage (V)', 'max_temperature (℃)', 'min_temperature (℃)'], 'target': 'available_capacity (Ah)', 'input_dim': 7, 'output_dim': 1, 'sample_size': 10000, 'validation_split': 0.2, 'test_split': 0.2}
+2025-05-01 05:19:19,539 - INFO - Processing data...
+2025-05-01 05:19:19,539 - INFO - Processing GOLF_CAR dataset
+2025-05-01 05:19:19,539 - INFO - Loading Golf Car dataset
+2025-05-01 05:19:19,541 - INFO - Found 18 data files
+2025-05-01 05:19:19,541 - INFO - Using sample size: 10000 records per file
+2025-05-01 05:19:19,541 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData10.csv
+2025-05-01 05:19:19,963 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData11.csv
+2025-05-01 05:19:20,444 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData12.csv
+2025-05-01 05:19:20,920 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData13.csv
+2025-05-01 05:19:21,346 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData14.csv
+2025-05-01 05:19:21,820 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData15.csv
+2025-05-01 05:19:22,263 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData16.csv
+2025-05-01 05:19:22,754 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData17.csv
+2025-05-01 05:19:23,165 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData18.csv
+2025-05-01 05:19:23,591 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData19.csv
+2025-05-01 05:19:24,023 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData2.csv
+2025-05-01 05:19:24,507 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData20.csv
+2025-05-01 05:19:24,983 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData3.csv
+2025-05-01 05:19:25,277 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData5.csv
+2025-05-01 05:19:25,734 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData6.csv
+2025-05-01 05:19:26,050 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData7.csv
+2025-05-01 05:19:26,512 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData8.csv
+2025-05-01 05:19:26,961 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData9.csv
+2025-05-01 05:19:27,320 - INFO - Loaded 180000 records from 18 files
+2025-05-01 05:19:27,321 - INFO - Preprocessing Golf Car data
+2025-05-01 05:19:27,380 - INFO - Creating sequences with length 40 and stride 20
+2025-05-01 05:19:27,406 - INFO - Created 8964 sequences with shape (8964, 40, 7)
+2025-05-01 05:19:27,414 - INFO - Created data loaders: Train (5380 samples), Validation (1792 samples), Test (1792 samples)
+2025-05-01 05:19:27,415 - INFO - Dataset info: {'input_dim': 7, 'output_dim': 1, 'seq_len': 40, 'features': ['soc', 'pack_voltage (V)', 'charge_current (A)', 'max_cell_voltage (V)', 'min_cell_voltage (V)', 'max_temperature (℃)', 'min_temperature (℃)'], 'target': 'available_capacity (Ah)'}
+2025-05-01 05:19:27,415 - INFO - Initializing model...
+2025-05-01 05:19:27,518 - INFO - Training model...
+2025-05-01 05:20:31,484 - INFO - Evaluating model...
+2025-05-01 05:20:31,544 - INFO - Evaluation metrics:

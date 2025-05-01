@@ -1,0 +1,32 @@
+2025-05-01 05:11:51,287 - INFO - Logger initialized at 2025-05-01 05:11:51
+2025-05-01 05:11:51,290 - INFO - Using GPU: NVIDIA GeForce RTX 4090 Laptop GPU
+2025-05-01 05:11:51,290 - INFO - Model: LSTM
+2025-05-01 05:11:51,290 - INFO - Dataset: GOLF_CAR
+2025-05-01 05:11:51,290 - INFO - Model Config: {'seq_len': 40, 'hidden_dim': 48, 'num_layers': 3, 'dropout': 0.2, 'batch_size': 32, 'epochs': 10, 'learning_rate': 8e-05}
+2025-05-01 05:11:51,290 - INFO - Dataset Config: {'dir': 'C:\\Users\\serha\\PycharmProjects\\fno_battery\\data\\data\\scaledData', 'features': ['soc', 'pack_voltage (V)', 'charge_current (A)', 'max_cell_voltage (V)', 'min_cell_voltage (V)', 'max_temperature (℃)', 'min_temperature (℃)'], 'target': 'available_capacity (Ah)', 'input_dim': 7, 'output_dim': 1, 'sample_size': 10000, 'validation_split': 0.2, 'test_split': 0.2}
+2025-05-01 05:11:51,291 - INFO - Processing data...
+2025-05-01 05:11:51,291 - INFO - Processing GOLF_CAR dataset
+2025-05-01 05:11:51,291 - INFO - Loading Golf Car dataset
+2025-05-01 05:11:51,291 - INFO - Found 18 data files
+2025-05-01 05:11:51,291 - INFO - Using sample size: 10000 records per file
+2025-05-01 05:11:51,291 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData10.csv
+2025-05-01 05:11:51,711 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData11.csv
+2025-05-01 05:11:52,185 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData12.csv
+2025-05-01 05:11:52,657 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData13.csv
+2025-05-01 05:11:53,078 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData14.csv
+2025-05-01 05:11:53,544 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData15.csv
+2025-05-01 05:11:53,987 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData16.csv
+2025-05-01 05:11:54,464 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData17.csv
+2025-05-01 05:11:54,865 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData18.csv
+2025-05-01 05:11:55,289 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData19.csv
+2025-05-01 05:11:55,714 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData2.csv
+2025-05-01 05:11:56,185 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData20.csv
+2025-05-01 05:11:56,651 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData3.csv
+2025-05-01 05:11:56,945 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData5.csv
+2025-05-01 05:11:57,393 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData6.csv
+2025-05-01 05:11:57,707 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData7.csv
+2025-05-01 05:11:58,176 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData8.csv
+2025-05-01 05:11:58,637 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData9.csv
+2025-05-01 05:11:59,001 - INFO - Loaded 180000 records from 18 files
+2025-05-01 05:11:59,002 - INFO - Preprocessing Golf Car data
+2025-05-01 05:11:59,045 - INFO - Creating sequences with length 40 and stride 20

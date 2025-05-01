@@ -1,0 +1,10 @@
+2025-05-01 04:41:34,989 - INFO - Logger initialized at 2025-05-01 04:41:34
+2025-05-01 04:41:34,989 - INFO - GPU not available, using CPU
+2025-05-01 04:41:34,989 - INFO - Model: FNO
+2025-05-01 04:41:34,989 - INFO - Dataset: NASA_VIT
+2025-05-01 04:41:34,989 - INFO - Model Config: {'seq_len': 40, 'modes': 12, 'width': 48, 'depth': 3, 'batch_size': 32, 'epochs': 10, 'learning_rate': 8e-05}
+2025-05-01 04:41:34,989 - INFO - Dataset Config: {'files': ['C:\\Users\\serha\\PycharmProjects\\fno_battery\\..\\data\\data\\NASA\\discharge\\train\\B0005_discharge.csv', 'C:\\Users\\serha\\PycharmProjects\\fno_battery\\..\\data\\data\\NASA\\discharge\\train\\B0006_discharge.csv', 'C:\\Users\\serha\\PycharmProjects\\fno_battery\\..\\data\\data\\NASA\\discharge\\train\\B0007_discharge.csv'], 'features': ['voltage_battery', 'current_battery', 'temp_battery'], 'target': 'capacity', 'input_dim': 3, 'output_dim': 1, 'validation_split': 0.2, 'test_split': 0.2}
+2025-05-01 04:41:34,992 - INFO - Processing data...
+2025-05-01 04:41:34,992 - INFO - Processing NASA_VIT dataset
+2025-05-01 04:41:34,992 - INFO - Loading NASA VIT dataset
+2025-05-01 04:41:34,992 - ERROR - Data file not found: C:\Users\serha\PycharmProjects\fno_battery\..\data\data\NASA\discharge\train\B0005_discharge.csv

@@ -1,0 +1,179 @@
+2025-05-01 05:48:14,471 - INFO - Logger initialized at 2025-05-01 05:48:14
+2025-05-01 05:48:14,473 - INFO - Using GPU: NVIDIA GeForce RTX 4090 Laptop GPU
+2025-05-01 05:48:14,473 - INFO - Model: LSTM
+2025-05-01 05:48:14,473 - INFO - Dataset: GOLF_CAR
+2025-05-01 05:48:14,473 - INFO - Model Config: {'seq_len': 60, 'hidden_dim': 128, 'num_layers': 3, 'dropout': 0.3, 'batch_size': 32, 'epochs': 50, 'learning_rate': 0.0003, 'bidirectional': True}
+2025-05-01 05:48:14,473 - INFO - Dataset Config: {'dir': 'C:\\Users\\serha\\PycharmProjects\\fno_battery\\data\\data\\scaledData', 'features': ['soc', 'pack_voltage (V)', 'charge_current (A)', 'max_cell_voltage (V)', 'min_cell_voltage (V)', 'max_temperature (℃)', 'min_temperature (℃)'], 'target': 'available_capacity (Ah)', 'input_dim': 7, 'output_dim': 1, 'sample_size': 10000, 'validation_split': 0.15, 'test_split': 0.15}
+2025-05-01 05:48:14,475 - INFO - Processing data...
+2025-05-01 05:48:14,475 - INFO - Processing GOLF_CAR dataset
+2025-05-01 05:48:14,475 - INFO - Loading Golf Car dataset
+2025-05-01 05:48:14,476 - INFO - Found 18 data files
+2025-05-01 05:48:14,476 - INFO - Using sample size: 10000 records per file
+2025-05-01 05:48:14,476 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData10.csv
+2025-05-01 05:48:14,900 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData11.csv
+2025-05-01 05:48:15,423 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData12.csv
+2025-05-01 05:48:15,903 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData13.csv
+2025-05-01 05:48:16,330 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData14.csv
+2025-05-01 05:48:16,798 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData15.csv
+2025-05-01 05:48:17,235 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData16.csv
+2025-05-01 05:48:17,727 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData17.csv
+2025-05-01 05:48:18,142 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData18.csv
+2025-05-01 05:48:18,594 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData19.csv
+2025-05-01 05:48:19,030 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData2.csv
+2025-05-01 05:48:19,509 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData20.csv
+2025-05-01 05:48:19,987 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData3.csv
+2025-05-01 05:48:20,276 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData5.csv
+2025-05-01 05:48:20,741 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData6.csv
+2025-05-01 05:48:21,063 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData7.csv
+2025-05-01 05:48:21,540 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData8.csv
+2025-05-01 05:48:21,995 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\data\scaledData\scaledData9.csv
+2025-05-01 05:48:22,360 - INFO - Loaded 180000 records from 18 files
+2025-05-01 05:48:22,362 - INFO - Preprocessing Golf Car data
+2025-05-01 05:48:22,418 - INFO - Creating sequences with length 60 and stride 30
+2025-05-01 05:48:22,445 - INFO - Created 5976 sequences with shape (5976, 60, 7)
+2025-05-01 05:48:22,451 - INFO - Created data loaders: Train (4184 samples), Validation (896 samples), Test (896 samples)
+2025-05-01 05:48:22,451 - INFO - Dataset info: {'input_dim': 7, 'output_dim': 1, 'seq_len': 60, 'features': ['soc', 'pack_voltage (V)', 'charge_current (A)', 'max_cell_voltage (V)', 'min_cell_voltage (V)', 'max_temperature (℃)', 'min_temperature (℃)'], 'target': 'available_capacity (Ah)'}
+2025-05-01 05:48:22,451 - INFO - Initializing model...
+2025-05-01 05:48:22,548 - INFO - Training model...
+2025-05-01 05:48:23,447 - INFO - Starting training for 50 epochs
+2025-05-01 05:48:24,146 - INFO - Epoch 1/50 - Training Loss: 275797.695134
+2025-05-01 05:48:24,213 - INFO - Epoch 1/50 - Validation Loss: 551280.823661
+2025-05-01 05:48:24,219 - INFO - Model saved to models\LSTM_GOLF_CAR_model.pt
+2025-05-01 05:48:24,923 - INFO - Epoch 2/50 - Training Loss: 415558.571803
+2025-05-01 05:48:24,987 - INFO - Epoch 2/50 - Validation Loss: 550583.719866
+2025-05-01 05:48:24,995 - INFO - Model saved to models\LSTM_GOLF_CAR_model.pt
+2025-05-01 05:48:25,927 - INFO - Epoch 3/50 - Training Loss: 555243.197519
+2025-05-01 05:48:25,991 - INFO - Epoch 3/50 - Validation Loss: 552122.936384
+2025-05-01 05:48:26,923 - INFO - Epoch 4/50 - Training Loss: 554546.273855
+2025-05-01 05:48:26,990 - INFO - Epoch 4/50 - Validation Loss: 560041.446429
+2025-05-01 05:48:27,924 - INFO - Epoch 5/50 - Training Loss: 553362.415315
+2025-05-01 05:48:27,988 - INFO - Epoch 5/50 - Validation Loss: 567055.343750
+2025-05-01 05:48:28,861 - INFO - Epoch 6/50 - Training Loss: 549310.538168
+2025-05-01 05:48:28,924 - INFO - Epoch 6/50 - Validation Loss: 547965.217634
+2025-05-01 05:48:28,930 - INFO - Model saved to models\LSTM_GOLF_CAR_model.pt
+2025-05-01 05:48:29,805 - INFO - Epoch 7/50 - Training Loss: 540913.883111
+2025-05-01 05:48:29,869 - INFO - Epoch 7/50 - Validation Loss: 534321.756696
+2025-05-01 05:48:29,875 - INFO - Model saved to models\LSTM_GOLF_CAR_model.pt
+2025-05-01 05:48:30,772 - INFO - Epoch 8/50 - Training Loss: 526393.017653
+2025-05-01 05:48:30,837 - INFO - Epoch 8/50 - Validation Loss: 559696.444196
+2025-05-01 05:48:31,674 - INFO - Epoch 9/50 - Training Loss: 502799.822996
+2025-05-01 05:48:31,740 - INFO - Epoch 9/50 - Validation Loss: 427196.848214
+2025-05-01 05:48:31,746 - INFO - Model saved to models\LSTM_GOLF_CAR_model.pt
+2025-05-01 05:48:32,672 - INFO - Epoch 10/50 - Training Loss: 472178.953244
+2025-05-01 05:48:32,739 - INFO - Epoch 10/50 - Validation Loss: 440492.529018
+2025-05-01 05:48:33,651 - INFO - Epoch 11/50 - Training Loss: 421514.548426
+2025-05-01 05:48:33,714 - INFO - Epoch 11/50 - Validation Loss: 383268.649554
+2025-05-01 05:48:33,720 - INFO - Model saved to models\LSTM_GOLF_CAR_model.pt
+2025-05-01 05:48:34,555 - INFO - Epoch 12/50 - Training Loss: 358521.522424
+2025-05-01 05:48:34,620 - INFO - Epoch 12/50 - Validation Loss: 343606.436384
+2025-05-01 05:48:34,626 - INFO - Model saved to models\LSTM_GOLF_CAR_model.pt
+2025-05-01 05:48:35,482 - INFO - Epoch 13/50 - Training Loss: 283710.904819
+2025-05-01 05:48:35,544 - INFO - Epoch 13/50 - Validation Loss: 252979.339286
+2025-05-01 05:48:35,550 - INFO - Model saved to models\LSTM_GOLF_CAR_model.pt
+2025-05-01 05:48:36,461 - INFO - Epoch 14/50 - Training Loss: 204789.502624
+2025-05-01 05:48:36,521 - INFO - Epoch 14/50 - Validation Loss: 178736.382254
+2025-05-01 05:48:36,527 - INFO - Model saved to models\LSTM_GOLF_CAR_model.pt
+2025-05-01 05:48:37,370 - INFO - Epoch 15/50 - Training Loss: 135820.266341
+2025-05-01 05:48:37,437 - INFO - Epoch 15/50 - Validation Loss: 103475.601004
+2025-05-01 05:48:37,443 - INFO - Model saved to models\LSTM_GOLF_CAR_model.pt
+2025-05-01 05:48:38,297 - INFO - Epoch 16/50 - Training Loss: 75932.151419
+2025-05-01 05:48:38,360 - INFO - Epoch 16/50 - Validation Loss: 60606.507673
+2025-05-01 05:48:38,367 - INFO - Model saved to models\LSTM_GOLF_CAR_model.pt
+2025-05-01 05:48:39,176 - INFO - Epoch 17/50 - Training Loss: 34067.056484
+2025-05-01 05:48:39,240 - INFO - Epoch 17/50 - Validation Loss: 24311.862026
+2025-05-01 05:48:39,246 - INFO - Model saved to models\LSTM_GOLF_CAR_model.pt
+2025-05-01 05:48:40,077 - INFO - Epoch 18/50 - Training Loss: 10631.347341
+2025-05-01 05:48:40,142 - INFO - Epoch 18/50 - Validation Loss: 4433.769252
+2025-05-01 05:48:40,148 - INFO - Model saved to models\LSTM_GOLF_CAR_model.pt
+2025-05-01 05:48:41,007 - INFO - Epoch 19/50 - Training Loss: 2918.415901
+2025-05-01 05:48:41,068 - INFO - Epoch 19/50 - Validation Loss: 1291.633556
+2025-05-01 05:48:41,073 - INFO - Model saved to models\LSTM_GOLF_CAR_model.pt
+2025-05-01 05:48:41,888 - INFO - Epoch 20/50 - Training Loss: 2030.422908
+2025-05-01 05:48:41,951 - INFO - Epoch 20/50 - Validation Loss: 960.155215
+2025-05-01 05:48:41,957 - INFO - Model saved to models\LSTM_GOLF_CAR_model.pt
+2025-05-01 05:48:42,776 - INFO - Epoch 21/50 - Training Loss: 2116.851660
+2025-05-01 05:48:42,837 - INFO - Epoch 21/50 - Validation Loss: 1334.493306
+2025-05-01 05:48:43,649 - INFO - Epoch 22/50 - Training Loss: 1971.487849
+2025-05-01 05:48:43,710 - INFO - Epoch 22/50 - Validation Loss: 485.130854
+2025-05-01 05:48:43,717 - INFO - Model saved to models\LSTM_GOLF_CAR_model.pt
+2025-05-01 05:48:44,513 - INFO - Epoch 23/50 - Training Loss: 2075.994745
+2025-05-01 05:48:44,574 - INFO - Epoch 23/50 - Validation Loss: 484.805729
+2025-05-01 05:48:44,580 - INFO - Model saved to models\LSTM_GOLF_CAR_model.pt
+2025-05-01 05:48:45,391 - INFO - Epoch 24/50 - Training Loss: 2065.978603
+2025-05-01 05:48:45,453 - INFO - Epoch 24/50 - Validation Loss: 506.920344
+2025-05-01 05:48:46,262 - INFO - Epoch 25/50 - Training Loss: 1959.939780
+2025-05-01 05:48:46,323 - INFO - Epoch 25/50 - Validation Loss: 1096.562602
+2025-05-01 05:48:47,117 - INFO - Epoch 26/50 - Training Loss: 2018.646531
+2025-05-01 05:48:47,180 - INFO - Epoch 26/50 - Validation Loss: 971.196890
+2025-05-01 05:48:48,015 - INFO - Epoch 27/50 - Training Loss: 1905.075170
+2025-05-01 05:48:48,077 - INFO - Epoch 27/50 - Validation Loss: 435.789278
+2025-05-01 05:48:48,082 - INFO - Model saved to models\LSTM_GOLF_CAR_model.pt
+2025-05-01 05:48:48,905 - INFO - Epoch 28/50 - Training Loss: 1902.410589
+2025-05-01 05:48:48,966 - INFO - Epoch 28/50 - Validation Loss: 435.599510
+2025-05-01 05:48:48,972 - INFO - Model saved to models\LSTM_GOLF_CAR_model.pt
+2025-05-01 05:48:49,803 - INFO - Epoch 29/50 - Training Loss: 1980.455037
+2025-05-01 05:48:49,873 - INFO - Epoch 29/50 - Validation Loss: 423.663518
+2025-05-01 05:48:49,885 - INFO - Model saved to models\LSTM_GOLF_CAR_model.pt
+2025-05-01 05:48:50,706 - INFO - Epoch 30/50 - Training Loss: 1896.413813
+2025-05-01 05:48:50,766 - INFO - Epoch 30/50 - Validation Loss: 396.042432
+2025-05-01 05:48:50,774 - INFO - Model saved to models\LSTM_GOLF_CAR_model.pt
+2025-05-01 05:48:51,610 - INFO - Epoch 31/50 - Training Loss: 1964.357646
+2025-05-01 05:48:51,672 - INFO - Epoch 31/50 - Validation Loss: 488.716731
+2025-05-01 05:48:52,503 - INFO - Epoch 32/50 - Training Loss: 1941.203843
+2025-05-01 05:48:52,566 - INFO - Epoch 32/50 - Validation Loss: 542.910583
+2025-05-01 05:48:53,382 - INFO - Epoch 33/50 - Training Loss: 1946.998245
+2025-05-01 05:48:53,446 - INFO - Epoch 33/50 - Validation Loss: 399.993021
+2025-05-01 05:48:54,294 - INFO - Epoch 34/50 - Training Loss: 1900.600247
+2025-05-01 05:48:54,355 - INFO - Epoch 34/50 - Validation Loss: 427.866815
+2025-05-01 05:48:55,196 - INFO - Epoch 35/50 - Training Loss: 1899.560769
+2025-05-01 05:48:55,284 - INFO - Epoch 35/50 - Validation Loss: 411.243958
+2025-05-01 05:48:56,196 - INFO - Epoch 36/50 - Training Loss: 1870.426427
+2025-05-01 05:48:56,258 - INFO - Epoch 36/50 - Validation Loss: 373.966147
+2025-05-01 05:48:56,263 - INFO - Model saved to models\LSTM_GOLF_CAR_model.pt
+2025-05-01 05:48:57,104 - INFO - Epoch 37/50 - Training Loss: 1950.931416
+2025-05-01 05:48:57,166 - INFO - Epoch 37/50 - Validation Loss: 408.004807
+2025-05-01 05:48:57,999 - INFO - Epoch 38/50 - Training Loss: 1945.547702
+2025-05-01 05:48:58,061 - INFO - Epoch 38/50 - Validation Loss: 427.169987
+2025-05-01 05:48:58,893 - INFO - Epoch 39/50 - Training Loss: 2012.926176
+2025-05-01 05:48:58,955 - INFO - Epoch 39/50 - Validation Loss: 383.281633
+2025-05-01 05:48:59,793 - INFO - Epoch 40/50 - Training Loss: 1900.237288
+2025-05-01 05:48:59,855 - INFO - Epoch 40/50 - Validation Loss: 400.954033
+2025-05-01 05:49:00,683 - INFO - Epoch 41/50 - Training Loss: 1945.804568
+2025-05-01 05:49:00,744 - INFO - Epoch 41/50 - Validation Loss: 400.927006
+2025-05-01 05:49:01,591 - INFO - Epoch 42/50 - Training Loss: 2007.452926
+2025-05-01 05:49:01,654 - INFO - Epoch 42/50 - Validation Loss: 370.325921
+2025-05-01 05:49:01,660 - INFO - Model saved to models\LSTM_GOLF_CAR_model.pt
+2025-05-01 05:49:02,494 - INFO - Epoch 43/50 - Training Loss: 1900.311966
+2025-05-01 05:49:02,560 - INFO - Epoch 43/50 - Validation Loss: 367.074509
+2025-05-01 05:49:02,567 - INFO - Model saved to models\LSTM_GOLF_CAR_model.pt
+2025-05-01 05:49:03,421 - INFO - Epoch 44/50 - Training Loss: 1896.729095
+2025-05-01 05:49:03,487 - INFO - Epoch 44/50 - Validation Loss: 359.561637
+2025-05-01 05:49:03,494 - INFO - Model saved to models\LSTM_GOLF_CAR_model.pt
+2025-05-01 05:49:04,323 - INFO - Epoch 45/50 - Training Loss: 1828.026862
+2025-05-01 05:49:04,384 - INFO - Epoch 45/50 - Validation Loss: 355.741235
+2025-05-01 05:49:04,390 - INFO - Model saved to models\LSTM_GOLF_CAR_model.pt
+2025-05-01 05:49:05,223 - INFO - Epoch 46/50 - Training Loss: 1832.063756
+2025-05-01 05:49:05,289 - INFO - Epoch 46/50 - Validation Loss: 352.703050
+2025-05-01 05:49:05,295 - INFO - Model saved to models\LSTM_GOLF_CAR_model.pt
+2025-05-01 05:49:06,128 - INFO - Epoch 47/50 - Training Loss: 1834.078334
+2025-05-01 05:49:06,192 - INFO - Epoch 47/50 - Validation Loss: 358.990654
+2025-05-01 05:49:07,080 - INFO - Epoch 48/50 - Training Loss: 1978.972487
+2025-05-01 05:49:07,143 - INFO - Epoch 48/50 - Validation Loss: 356.991188
+2025-05-01 05:49:07,980 - INFO - Epoch 49/50 - Training Loss: 1980.234254
+2025-05-01 05:49:08,043 - INFO - Epoch 49/50 - Validation Loss: 357.759520
+2025-05-01 05:49:08,884 - INFO - Epoch 50/50 - Training Loss: 1953.477304
+2025-05-01 05:49:08,945 - INFO - Epoch 50/50 - Validation Loss: 354.914823
+2025-05-01 05:49:08,946 - INFO - Loaded best model parameters
+2025-05-01 05:49:08,946 - INFO - Training complete in 45.50 seconds
+2025-05-01 05:49:08,946 - INFO - Best validation loss: 352.703050
+2025-05-01 05:49:08,946 - INFO - Evaluating model...
+2025-05-01 05:49:09,010 - INFO - Evaluation metrics:
+2025-05-01 05:49:09,010 - INFO - RMSE: 46.9912
+2025-05-01 05:49:09,010 - INFO - MAE: 35.7449
+2025-05-01 05:49:09,010 - INFO - R2: 0.2378
+2025-05-01 05:49:09,010 - INFO - MAPE: 3.2063
+2025-05-01 05:49:09,010 - INFO - PCC: 0.5549
+2025-05-01 05:49:09,011 - INFO - MDA: 71.1732
+2025-05-01 05:49:09,011 - INFO - Results saved to outputs/results/LSTM_GOLF_CAR_results.json
+2025-05-01 05:49:09,011 - INFO - Prediction plot saved to outputs/figures/LSTM_GOLF_CAR_prediction.png
+2025-05-01 05:49:09,011 - INFO - Done!

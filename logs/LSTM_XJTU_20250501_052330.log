@@ -1,0 +1,10 @@
+2025-05-01 05:23:30,536 - INFO - Logger initialized at 2025-05-01 05:23:30
+2025-05-01 05:23:30,540 - INFO - Using GPU: NVIDIA GeForce RTX 4090 Laptop GPU
+2025-05-01 05:23:30,540 - INFO - Model: LSTM
+2025-05-01 05:23:30,540 - INFO - Dataset: XJTU
+2025-05-01 05:23:30,540 - INFO - Model Config: {'seq_len': 40, 'hidden_dim': 48, 'num_layers': 3, 'dropout': 0.2, 'batch_size': 32, 'epochs': 100, 'learning_rate': 1e-05}
+2025-05-01 05:23:30,540 - INFO - Dataset Config: {'dir': 'C:\\Users\\serha\\PycharmProjects\\fno_battery\\..\\data\\XJTU_data', 'features': ['voltage mean', 'voltage std', 'voltage kurtosis', 'voltage skewness', 'CC Q', 'CC charge time', 'voltage slope', 'voltage entropy', 'current mean', 'current std', 'current kurtosis', 'current skewness', 'CV Q', 'CV charge time', 'current slope', 'current entropy', 'capacity'], 'target': 'capacity', 'input_dim': 17, 'output_dim': 1, 'validation_split': 0.2, 'test_split': 0.2}
+2025-05-01 05:23:30,543 - INFO - Processing data...
+2025-05-01 05:23:30,543 - INFO - Processing XJTU dataset
+2025-05-01 05:23:30,543 - INFO - Loading XJTU dataset
+2025-05-01 05:23:30,543 - ERROR - Data directory not found: C:\Users\serha\PycharmProjects\fno_battery\..\data\XJTU_data

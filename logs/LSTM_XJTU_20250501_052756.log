@@ -1,0 +1,75 @@
+2025-05-01 05:27:56,912 - INFO - Logger initialized at 2025-05-01 05:27:56
+2025-05-01 05:27:56,915 - INFO - Using GPU: NVIDIA GeForce RTX 4090 Laptop GPU
+2025-05-01 05:27:56,915 - INFO - Model: LSTM
+2025-05-01 05:27:56,915 - INFO - Dataset: XJTU
+2025-05-01 05:27:56,915 - INFO - Model Config: {'seq_len': 40, 'hidden_dim': 48, 'num_layers': 3, 'dropout': 0.2, 'batch_size': 32, 'epochs': 100, 'learning_rate': 1e-05}
+2025-05-01 05:27:56,916 - INFO - Dataset Config: {'dir': 'C:\\Users\\serha\\PycharmProjects\\fno_battery\\data\\XJTU_data', 'features': ['voltage mean', 'voltage std', 'voltage kurtosis', 'voltage skewness', 'CC Q', 'CC charge time', 'voltage slope', 'voltage entropy', 'current mean', 'current std', 'current kurtosis', 'current skewness', 'CV Q', 'CV charge time', 'current slope', 'current entropy', 'capacity'], 'target': 'capacity', 'input_dim': 17, 'output_dim': 1, 'validation_split': 0.2, 'test_split': 0.2}
+2025-05-01 05:27:56,918 - INFO - Processing data...
+2025-05-01 05:27:56,919 - INFO - Processing XJTU dataset
+2025-05-01 05:27:56,919 - INFO - Loading XJTU dataset
+2025-05-01 05:27:56,919 - INFO - Found 55 data files
+2025-05-01 05:27:56,919 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\2C_battery-1.csv
+2025-05-01 05:27:56,922 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\2C_battery-2.csv
+2025-05-01 05:27:56,925 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\2C_battery-3.csv
+2025-05-01 05:27:56,926 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\2C_battery-4.csv
+2025-05-01 05:27:56,928 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\2C_battery-5.csv
+2025-05-01 05:27:56,930 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\2C_battery-6.csv
+2025-05-01 05:27:56,931 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\2C_battery-7.csv
+2025-05-01 05:27:56,933 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\2C_battery-8.csv
+2025-05-01 05:27:56,935 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\3C_battery-1.csv
+2025-05-01 05:27:56,937 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\3C_battery-10.csv
+2025-05-01 05:27:56,939 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\3C_battery-11.csv
+2025-05-01 05:27:56,940 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\3C_battery-12.csv
+2025-05-01 05:27:56,940 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\3C_battery-13.csv
+2025-05-01 05:27:56,941 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\3C_battery-14.csv
+2025-05-01 05:27:56,943 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\3C_battery-15.csv
+2025-05-01 05:27:56,944 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\3C_battery-2.csv
+2025-05-01 05:27:56,946 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\3C_battery-3.csv
+2025-05-01 05:27:56,947 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\3C_battery-4.csv
+2025-05-01 05:27:56,948 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\3C_battery-5.csv
+2025-05-01 05:27:56,950 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\3C_battery-6.csv
+2025-05-01 05:27:56,951 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\3C_battery-7.csv
+2025-05-01 05:27:56,953 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\3C_battery-8.csv
+2025-05-01 05:27:56,954 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\3C_battery-9.csv
+2025-05-01 05:27:56,956 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\R2.5_battery-1.csv
+2025-05-01 05:27:56,957 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\R2.5_battery-2.csv
+2025-05-01 05:27:56,960 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\R2.5_battery-3.csv
+2025-05-01 05:27:56,963 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\R2.5_battery-4.csv
+2025-05-01 05:27:56,966 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\R2.5_battery-5.csv
+2025-05-01 05:27:56,967 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\R2.5_battery-6.csv
+2025-05-01 05:27:56,970 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\R2.5_battery-7.csv
+2025-05-01 05:27:56,971 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\R2.5_battery-8.csv
+2025-05-01 05:27:56,973 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\R3_battery-1.csv
+2025-05-01 05:27:56,977 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\R3_battery-2.csv
+2025-05-01 05:27:56,980 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\R3_battery-3.csv
+2025-05-01 05:27:56,982 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\R3_battery-4.csv
+2025-05-01 05:27:56,984 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\R3_battery-5.csv
+2025-05-01 05:27:56,987 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\R3_battery-6.csv
+2025-05-01 05:27:56,990 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\R3_battery-7.csv
+2025-05-01 05:27:56,991 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\R3_battery-8.csv
+2025-05-01 05:27:56,995 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\RW_battery-1.csv
+2025-05-01 05:27:56,995 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\RW_battery-2.csv
+2025-05-01 05:27:56,997 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\RW_battery-3.csv
+2025-05-01 05:27:56,999 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\RW_battery-4.csv
+2025-05-01 05:27:57,000 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\RW_battery-5.csv
+2025-05-01 05:27:57,001 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\RW_battery-6.csv
+2025-05-01 05:27:57,003 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\RW_battery-7.csv
+2025-05-01 05:27:57,004 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\RW_battery-8.csv
+2025-05-01 05:27:57,004 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\Sim_satellite_battery-1.csv
+2025-05-01 05:27:57,008 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\Sim_satellite_battery-2.csv
+2025-05-01 05:27:57,012 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\Sim_satellite_battery-3.csv
+2025-05-01 05:27:57,016 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\Sim_satellite_battery-4.csv
+2025-05-01 05:27:57,018 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\Sim_satellite_battery-5.csv
+2025-05-01 05:27:57,023 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\Sim_satellite_battery-6.csv
+2025-05-01 05:27:57,027 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\Sim_satellite_battery-7.csv
+2025-05-01 05:27:57,030 - INFO - Loading file: C:\Users\serha\PycharmProjects\fno_battery\data\XJTU_data\Sim_satellite_battery-8.csv
+2025-05-01 05:27:57,035 - INFO - Loaded 23297 records from 55 files
+2025-05-01 05:27:57,035 - INFO - Preprocessing XJTU data
+2025-05-01 05:27:57,077 - INFO - Creating sequences with length 40 and stride 20
+2025-05-01 05:27:57,098 - INFO - Created 1093 sequences with shape (1093, 40, 17)
+2025-05-01 05:27:57,104 - INFO - Created data loaders: Train (657 samples), Validation (218 samples), Test (218 samples)
+2025-05-01 05:27:57,105 - INFO - Dataset info: {'input_dim': 17, 'output_dim': 1, 'seq_len': 40, 'features': ['voltage mean', 'voltage std', 'voltage kurtosis', 'voltage skewness', 'CC Q', 'CC charge time', 'voltage slope', 'voltage entropy', 'current mean', 'current std', 'current kurtosis', 'current skewness', 'CV Q', 'CV charge time', 'current slope', 'current entropy', 'capacity'], 'target': 'capacity'}
+2025-05-01 05:27:57,105 - INFO - Initializing model...
+2025-05-01 05:27:57,200 - INFO - Training model...
+2025-05-01 05:28:06,343 - INFO - Evaluating model...
+2025-05-01 05:28:06,357 - INFO - Evaluation metrics:
