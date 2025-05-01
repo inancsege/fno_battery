@@ -22,3 +22,7 @@
 /fno_v2/preprocessing/tests/README.md
 /fno_v2/preprocessing/tests/run_tests.py
 /fno_v2/preprocessing/tests/test_utils.py
+/.idea/fno_battery.iml
+/.idea/misc.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/vcs.xml
