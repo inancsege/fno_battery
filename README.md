@@ -1,113 +1,134 @@
-# Battery Capacity Prediction with Multiple AI Models
+# FNO Battery Capacity Prediction
 
-This repository contains a collection of AI models for predicting battery capacity and state of health using time-series data. The project supports several state-of-the-art models and includes support for multiple battery datasets.
+A deep learning framework for battery state estimation using Fourier Neural Operators (FNO) and other machine learning models.
 
-## Models Supported
+## Overview
 
-1. **FNO (Fourier Neural Operator)**: A powerful model for learning operators in PDE-like systems, adapted for time-series data
-2. **LSTM**: Standard and Attention-based LSTM models for sequential data
-3. **TCN (Temporal Convolutional Network)**: Convolution-based architecture for time-series
-4. **XGBoost**: Gradient boosting trees implementation, efficient for tabular data
-5. **Random Forest**: Ensemble tree-based model
-6. **Linear Regression**: Simple baseline model
-7. **SVR (Support Vector Regression)**: Kernel-based regression model
+This project implements various models for battery state estimation tasks such as State of Health (SoH) and Remaining Useful Life (RUL) prediction, with a focus on FNO-based architectures. The framework supports multiple battery datasets and offers a modular design for easy extension.
 
-## Datasets Supported
+## Features
 
-- **NASA_VIT**: NASA battery dataset with voltage, current, and temperature features
-- **NASA_RUL**: NASA dataset for remaining useful life prediction
-- **IEEE_FC**: IEEE fuel cell dataset
-- **XJTU**: XJTU-SY battery dataset
-- **GOLF_CAR**: Golf cart battery telemetry data
+- **Multiple Models**: FNO, LSTM, LSTM with Attention, TCN, XGBoost, Random Forest, SVR, and Linear Regression
+- **Dataset Support**: NASA (VIT & RUL), IEEE FC, XJTU, and GOLF_CAR datasets
+- **Easy Configuration**: Simple configuration of models, datasets, and training parameters
+- **Comprehensive Evaluation**: Multiple metrics (RMSE, MAE, R², etc.) and visualization tools
+- **Extensible Design**: Modular architecture for adding new models and datasets
 
 ## Installation
 
-1. Clone the repository:
-   ```
-   git clone https://github.com/yourusername/fno_battery.git
-   cd fno_battery
-   ```
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/fno_battery.git
+cd fno_battery
 
-2. Install the dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
+# Create a virtual environment (optional but recommended)
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
 
 ## Usage
 
-### Training a Model
-
-To train a model, use the `main.py` script with appropriate arguments:
+### Basic Usage
 
 ```bash
-python fno_v2/main.py --model [MODEL_TYPE] --dataset [DATASET_TYPE]
+# Run with default settings (FNO model on NASA_VIT dataset)
+python main.py
+
+# Specify different model and dataset
+python main.py --model LSTM --dataset NASA_RUL
+
+# Run in evaluation-only mode (requires pre-trained model)
+python main.py --model FNO --dataset NASA_VIT --eval_only
 ```
 
-Where:
-- `[MODEL_TYPE]` is one of: FNO, LSTM, LSTM_ATTN, TCN, XGBoost, RandomForest, LinearRegression, SVR
-- `[DATASET_TYPE]` is one of: NASA_VIT, NASA_RUL, IEEE_FC, XJTU, GOLF_CAR
+### Command-Line Arguments
 
-Example:
-```bash
-python fno_v2/main.py --model LSTM --dataset GOLF_CAR
-```
+| Argument | Description |
+|----------|-------------|
+| `--model` | Model type (FNO, LSTM, LSTM_ATTN, TCN, XGBoost, RandomForest, LinearRegression, SVR) |
+| `--dataset` | Dataset to use (NASA_VIT, NASA_RUL, IEEE_FC, XJTU, GOLF_CAR) |
+| `--seq_len` | Sequence length for time series data |
+| `--batch_size` | Training batch size |
+| `--epochs` | Number of training epochs |
+| `--learning_rate` | Learning rate for optimization |
+| `--eval_only` | Only run evaluation on test data |
+| `--seed` | Random seed for reproducibility |
+| `--gpu` | GPU device ID to use |
+| `--debug` | Enable debug mode with verbose logging |
 
-### Model Configuration
+### Batch Execution
 
-Model parameters can be adjusted in the `fno_v2/config.py` file. Key parameters include:
-
-- `EPOCHS`: Number of training epochs
-- `BATCH_SIZE`: Batch size for training
-- `LEARNING_RATE`: Learning rate for optimization
-- `SEQ_LEN`: Sequence length for time-series data
-- Model-specific parameters (MODES, WIDTH, DEPTH, etc.)
-
-### Directory Structure
-
-```
-fno_battery/
-├── data/                 # Raw datasets
-│   ├── NASA/
-│   ├── IEEE/
-│   ├── XJTU_data/
-│   └── scaledData/
-├── fno_v2/
-│   ├── models/           # Model definitions
-│   ├── preprocessing/    # Data preprocessing classes
-│   ├── training/         # Training utilities
-│   ├── evaluation/       # Evaluation utilities
-│   ├── utils/            # Helper functions
-│   ├── config.py         # Configuration settings
-│   └── main.py           # Main execution script
-└── requirements.txt      # Package dependencies
-```
-
-## Performance
-
-Model performance varies based on the dataset and configuration. Typical metrics include:
-
-- RMSE (Root Mean Squared Error)
-- MAE (Mean Absolute Error)
-- R2 (Coefficient of Determination)
-- MAPE (Mean Absolute Percentage Error)
-- PCC (Pearson Correlation Coefficient)
-- MDA (Mean Directional Accuracy)
-
-Evaluation results are saved in the `outputs/results/` directory.
-
-## Example Commands
+Run multiple model configurations:
 
 ```bash
-# Train FNO model on NASA_VIT data
-python fno_v2/main.py --model FNO --dataset NASA_VIT
+# On Linux/Mac
+./run_models.sh
 
-# Train LSTM model with golf car battery data
-python fno_v2/main.py --model LSTM --dataset GOLF_CAR
-
-# Train XGBoost model on XJTU data
-python fno_v2/main.py --model XGBoost --dataset XJTU
+# On Windows
+.\run_models.ps1
 ```
 
-## Results Visualization
+## Project Structure
 
-Prediction visualizations and loss curves are saved in the `outputs/figures/` directory after training. 
+```
+├── main.py                 # Main script for training and evaluation
+├── config.py               # Configuration settings
+├── models/                 # Model implementations
+├── preprocessing/          # Data preprocessing modules
+│   └── data_processor.py   # Main data processing class
+├── training/               # Training utilities
+│   └── trainer.py          # Model training implementation
+├── evaluation/             # Evaluation utilities
+│   └── evaluator.py        # Model evaluation implementation
+├── utils/                  # Utility functions
+│   ├── logger.py           # Logging configuration
+│   ├── helpers.py          # Helper functions
+│   └── plotting.py         # Visualization tools
+├── outputs/                # Generated results (created automatically)
+│   ├── figures/            # Saved plots and visualizations
+│   ├── results/            # Metrics and numerical results
+│   └── models/             # Saved model weights
+└── requirements.txt        # Project dependencies
+```
+
+## Configuration
+
+Edit `config.py` to customize model hyperparameters, dataset paths, and training settings. The file includes:
+
+- `MODEL_CONFIGS`: Hyperparameters for each model type
+- `DATASET_CONFIGS`: Paths and settings for each dataset
+- `GENERAL_CONFIG`: General settings applicable to all experiments
+
+## Extending the Framework
+
+### Adding a New Model
+
+1. Create a new model file in the `models` directory
+2. Update `config.py` with the model's hyperparameters
+3. Import the model in `models/__init__.py`
+
+### Adding a New Dataset
+
+1. Create a new preprocessor in the `preprocessing` directory
+2. Update `config.py` with the dataset configuration
+3. Update `preprocessing/data_processor.py` to handle the new dataset
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Citation
+
+If you use this code in your research, please cite:
+
+```
+@article{yourarticle,
+  title={Your paper title},
+  author={Your name},
+  journal={Journal name},
+  year={Year}
+}
+``` 
