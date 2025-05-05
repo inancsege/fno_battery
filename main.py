@@ -21,9 +21,25 @@ from evaluation.evaluator import Evaluator
 def setup_directories():
     """Create necessary directories if they don't exist"""
     os.makedirs("models", exist_ok=True)
+    os.makedirs("outputs", exist_ok=True)
     os.makedirs("outputs/results", exist_ok=True)
     os.makedirs("outputs/figures", exist_ok=True)
     os.makedirs("logs", exist_ok=True)
+    
+    # Ensure all paths are absolute
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    model_dir = os.path.join(base_dir, "models")
+    outputs_dir = os.path.join(base_dir, "outputs")
+    results_dir = os.path.join(outputs_dir, "results")
+    figures_dir = os.path.join(outputs_dir, "figures")
+    logs_dir = os.path.join(base_dir, "logs")
+    
+    # Create directories with absolute paths
+    os.makedirs(model_dir, exist_ok=True)
+    os.makedirs(outputs_dir, exist_ok=True)
+    os.makedirs(results_dir, exist_ok=True)
+    os.makedirs(figures_dir, exist_ok=True)
+    os.makedirs(logs_dir, exist_ok=True)
 
 def parse_arguments():
     """Parse command line arguments"""
@@ -142,8 +158,49 @@ def main():
             output_dim=dataset_info['output_dim'],
             **{k: v for k, v in model_config.items() if k not in ['seq_len', 'batch_size', 'epochs', 'learning_rate']}
         )
+    elif args.model in ['FNO', 'FNO_RUL']:
+        # FNO models use seq_len
+        model = ModelClass(
+            input_dim=dataset_info['input_dim'],
+            output_dim=dataset_info['output_dim'],
+            seq_len=model_config['seq_len'],
+            **{k: v for k, v in model_config.items() if k not in ['seq_len', 'batch_size', 'epochs', 'learning_rate']}
+        )
+    elif args.model == 'RandomForest':
+        # RandomForest only accepts specific parameters
+        model = ModelClass(
+            seq_len=model_config['seq_len'],
+            input_dim=dataset_info['input_dim'],
+            n_estimators=model_config.get('n_estimators', 100),
+            max_depth=model_config.get('max_depth', 10)
+        )
+    elif args.model == 'XGBoost':
+        # XGBoost with its specific parameters
+        model = ModelClass(
+            seq_len=model_config['seq_len'],
+            input_dim=dataset_info['input_dim'],
+            n_estimators=model_config.get('n_estimators', 100),
+            max_depth=model_config.get('max_depth', 5),
+            learning_rate=model_config.get('learning_rate', 0.1),
+            use_cuda=model_config.get('use_cuda', False)
+        )
+    elif args.model == 'LinearRegression':
+        # LinearRegression with minimal parameters
+        model = ModelClass(
+            seq_len=model_config['seq_len'],
+            input_dim=dataset_info['input_dim']
+        )
+    elif args.model == 'SVR':
+        # SVR with its specific parameters
+        model = ModelClass(
+            seq_len=model_config['seq_len'],
+            input_dim=dataset_info['input_dim'],
+            kernel=model_config.get('kernel', 'rbf'),
+            C=model_config.get('C', 1.0),
+            epsilon=model_config.get('epsilon', 0.1)
+        )
     else:
-        # FNO and other models use seq_len
+        # Default initialization for other models
         model = ModelClass(
             input_dim=dataset_info['input_dim'],
             output_dim=dataset_info['output_dim'],
@@ -155,28 +212,58 @@ def main():
     model = model.to(device)
     
     # Model save path
-    model_save_dir = "models"
+    model_save_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "models")
     model_filename = f"{args.model}_{args.dataset}_model.pt"
     model_save_path = os.path.join(model_save_dir, model_filename)
     
     # Results and figure paths
-    results_file = f"outputs/results/{args.model}_{args.dataset}_results.json"
-    figure_path = f"outputs/figures/{args.model}_{args.dataset}_prediction.png"
+    results_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "outputs", "results")
+    figures_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "outputs", "figures")
+    results_file = os.path.join(results_dir, f"{args.model}_{args.dataset}_results.json")
+    figure_path = os.path.join(figures_dir, f"{args.model}_{args.dataset}_prediction.png")
     
     if not args.eval_only:
         # Train model
         logger.info("Training model...")
+        
+        # Prepare trainer config
+        trainer_config = {
+            'epochs': model_config['epochs'],
+            'learning_rate': model_config['learning_rate'],
+            'model_save_path': model_save_path,
+            'device': device,
+            'logger': logger,
+            'model_type': args.model
+        }
+        
+        # Custom configuration for FNO model
+        if args.model == 'FNO':
+            # Special optimizer and scheduler for FNO
+            trainer_config['optimizer_type'] = 'AdamW'
+            trainer_config['weight_decay'] = 0.01
+            trainer_config['lr_scheduler'] = 'cosine_warmup'
+            trainer_config['warmup_epochs'] = 10
+            trainer_config['min_lr'] = 1e-6
+            
+            # Gradient clipping to stabilize training
+            trainer_config['grad_clip_value'] = 1.0
+            
+            # Use aggressive EMA for validation with moving average
+            trainer_config['use_ema'] = True
+            trainer_config['ema_decay'] = 0.998
+            
+            # Enhanced loss function with frequency-domain penalties
+            trainer_config['use_spectral_loss'] = True
+            trainer_config['spectral_loss_weight'] = 0.02
+            
+            # Train for more epochs with patience-based stopping
+            trainer_config['patience'] = 20
+        
         trainer = Trainer(
             model=model,
             train_loader=train_loader,
             val_loader=val_loader,
-            config={
-                'epochs': model_config['epochs'],
-                'learning_rate': model_config['learning_rate'],
-                'model_save_path': model_save_path,
-                'device': device,
-                'logger': logger
-            }
+            config=trainer_config
         )
         trainer.train()
     
