@@ -92,13 +92,13 @@ DATASET_CONFIGS = {
 
 # --- Model Configurations ---
 MODEL_CONFIGS = {"FNO": {
-    "seq_len": 30,
-    "modes": 16,
-    "width": 64,
-    "depth": 4,
+    "seq_len": 100,
+    "modes": 32,
+    "width": 192,
+    "depth": 6,
     "batch_size": 32,
-    "epochs": 50,
-    "learning_rate": 1e-4
+    "epochs": 120,
+    "learning_rate": 1e-3
 }, "LSTM": {
     "seq_len": 60,
     "hidden_dim": 128,
@@ -144,7 +144,8 @@ MODEL_CONFIGS = {"FNO": {
     "min_samples_leaf": 2,
     "max_features": "sqrt",
     "batch_size": 64,
-    "epochs": 10
+    "epochs": 10,
+    "learning_rate": 8e-5
 }, "LinearRegression": {
     "seq_len": 40,
     "batch_size": 64,
