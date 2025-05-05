@@ -115,6 +115,18 @@ class MLModelWrapper:
         """
         return self.predict(X)
     
+    def __call__(self, X):
+        """
+        Make the model callable directly, like a function
+        
+        Args:
+            X (torch.Tensor): Input data
+            
+        Returns:
+            torch.Tensor: Predictions
+        """
+        return self.predict(X)
+    
     def to(self, device):
         """
         Simulate the PyTorch to() method for compatibility
